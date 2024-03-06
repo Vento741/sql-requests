@@ -1,0 +1,54 @@
+-- Создание таблицы Genres
+CREATE TABLE Genres (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+-- Создание таблицы Artists
+CREATE TABLE Artists (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+
+-- Создание таблицы ArtistGenres
+CREATE TABLE ArtistGenres (
+    artist_id INT NOT NULL REFERENCES Artists(id),
+    genre_id INT NOT NULL REFERENCES Genres(id),
+    PRIMARY KEY (artist_id, genre_id)
+);
+
+-- Создание таблицы Albums
+CREATE TABLE Albums (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    release_year INT NOT NULL
+);
+
+-- Создание таблицы AlbumArtists
+CREATE TABLE AlbumArtists (
+    album_id INT NOT NULL REFERENCES Albums(id),
+    artist_id INT NOT NULL REFERENCES Artists(id),
+    PRIMARY KEY (album_id, artist_id)
+);
+
+-- Создание таблицы Tracks
+CREATE TABLE Tracks (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    duration INTERVAL NOT NULL,
+    album_id INT NOT NULL REFERENCES Albums(id)
+);
+
+-- Создание таблицы Compilations
+CREATE TABLE Compilations (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(100) NOT NULL,
+    release_year INT NOT NULL
+);
+
+-- Создание таблицы CompilationTracks
+CREATE TABLE CompilationTracks (
+    compilation_id INT NOT NULL REFERENCES Compilations(id),
+    track_id INT NOT NULL REFERENCES Tracks(id),
+    PRIMARY KEY (compilation_id, track_id)
+);
